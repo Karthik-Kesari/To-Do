@@ -1,0 +1,6 @@
+com\todoapp\TodoApplication.class
+com\todoapp\service\TaskService.class
+com\todoapp\config\DynamoDbConfig.class
+com\todoapp\model\Task.class
+com\todoapp\dao\TaskDao.class
+com\todoapp\controller\TaskController.class
