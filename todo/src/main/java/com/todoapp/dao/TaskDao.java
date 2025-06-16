@@ -94,10 +94,10 @@ public class TaskDao {
             task.setTitle(item.get("title").s());
             task.setDescription(item.get("description").s());
             task.setCompleted(item.get("completed").bool());
-            task.setUpdatedAt((item.get("createdAt").s()));
+            task.setCreatedAt((item.get("createdAt").s()));
             task.setUpdatedAt((item.get("updatedAt").s())); 
             tasks.add(task);
-            System.out.println("created at "+item.get("createdAt").s());
+            System.out.println("VS code to fargate ");
         }
         return tasks;
     }
