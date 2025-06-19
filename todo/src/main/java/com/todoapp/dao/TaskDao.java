@@ -134,7 +134,7 @@ public class TaskDao {
 
         if (!updatedTask.isEmpty()) {
             UpdateItemRequest request = UpdateItemRequest.builder()
-                                .tableName("tasks")
+                                .tableName("Tasks")
                                 .key(key)
                                 .attributeUpdates(updatedTask)
                                 .build();   
