@@ -35,6 +35,9 @@ public class TaskController {
     }
     @GetMapping("/{id}")
     public Task getTask(@PathVariable String id)
+    {
+        return service.getTask(id);
+    }
     @PutMapping("/tasks/{id}")
     public String updateTask(@PathVariable String id ,@RequestBody Task task)
     {
@@ -46,7 +49,7 @@ public class TaskController {
         }
         else
         {
-            return service.updateTask(id, task);
+            return ("Task updated for ID : " +id);
         }
     }
 }
