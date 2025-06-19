@@ -49,6 +49,7 @@ public class TaskController {
         }
         else
         {
+            service.updateTask(id, task);
             return ("Task updated for ID : " +id);
         }
     }
