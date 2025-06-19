@@ -53,8 +53,8 @@ public class TaskDao {
         {
             currentTime = task.getCreatedAt();
         }
-        item.put("created_at", AttributeValue.builder().s(task.getCreatedAt()).build());
-
+        item.put("createdAt", AttributeValue.builder().s(task.getCreatedAt()).build());
+        item.put("updatedAt", AttributeValue.builder().s("-").build());
         PutItemRequest request = PutItemRequest.builder().tableName("Tasks").item(item).build();
         dynamoDbClient.putItem(request);
         System.out.println("place task "+task.getId());
