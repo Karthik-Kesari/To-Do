@@ -135,6 +135,7 @@ public class TaskDao {
         if (!updatedTask.isEmpty()) {
             UpdateItemRequest request = UpdateItemRequest.builder()
                                 .tableName("tasks")
+                                .key(key)
                                 .attributeUpdates(updatedTask)
                                 .build();   
             dynamoDbClient.updateItem(request);
