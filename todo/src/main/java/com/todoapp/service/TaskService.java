@@ -25,5 +25,9 @@ public class TaskService {
     public List<Task> getTasks() {
         return dao.getTasks();
     }
+    public Task updateTask(String id, Task task) {
+        return dao.updateTask();
+        
+    }
 
 }

@@ -10,11 +10,14 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeAction;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValueUpdate;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
+import software.amazon.awssdk.services.dynamodb.model.UpdateItemRequest;
 
 import com.todoapp.config.DynamoDbConfig;
 import com.todoapp.model.Task; 
@@ -80,9 +83,7 @@ public class TaskDao {
 
         return task; // Placeholder return statement
     }
-
-    public List<Task> getTasks()
-    {
+    public List<Task> getTasks(){
         ScanRequest scanrequest = ScanRequest.builder().tableName("Tasks").build();
         ScanResponse response = dynamoDbClient.scan(scanrequest);
 
@@ -100,5 +101,45 @@ public class TaskDao {
             System.out.println("VS code to fargate ");
         }
         return tasks;
+    }
+    public Task updateTask(String id, Task task) {
+
+        Map<String, AttributeValue> key = Map.of("id",AttributeValue.builder().s(id).build());
+
+        Map<String, AttributeValueUpdate> updatedTask = new HashMap<>();
+
+        if(task.getTitle() != null){
+                 updatedTask.put("title",AttributeValueUpdate.builder()
+                    .value(AttributeValue.builder().s(task.getTitle()).build())
+                    .action(AttributeAction.PUT)
+                    .build());
+            }
+        if(task.getDescription() != null){
+              updatedTask.put("description", AttributeValueUpdate.builder()
+                    .value(AttributeValue.builder().s(task.getDescription()).build())
+                    .action(AttributeAction.PUT)
+                    .build());
+            }
+        if(task.isCompleted() || (task.isCompleted())){
+                updatedTask.put("completed", AttributeValueUpdate.builder()
+                    .value(AttributeValue.builder().bool(task.isCompleted()).build())
+                    .action(AttributeAction.PUT)
+                    .build());
+            }
+        String currentTime = Instant.now().toString();
+        updatedTask.put("updatedAt", AttributeValueUpdate.builder()
+                    .value(AttributeValue.builder().s(currentTime).build())
+                    .action(AttributeAction.PUT)
+                    .build());
+
+        if (!updatedTask.isEmpty()) {
+            UpdateItemRequest request = UpdateItemRequest.builder()
+                                .tableName("tasks")
+                                .attributeUpdates(updatedTask)
+                                .build();   
+            dynamoDbClient.updateItem(request);
+        }
+        return task;
+        
     }
 }
