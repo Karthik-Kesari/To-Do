@@ -2,3 +2,7 @@ This is a TODO application to update , delete ,list and edit tasks
 This project has dev, devlop and main branches
 Now we have barch specific triggers in team city
 Added Branch Protection Rule
+Added SNS topic for deployment alerts for success and failed builds
+  1. Created a SNS topic to send out an email message
+  2. Trigrered the SNS topic from teamcity build step for Success and Failure case based on the build status.
+  3. Added Build log url in emails to help in detailed debugging.
